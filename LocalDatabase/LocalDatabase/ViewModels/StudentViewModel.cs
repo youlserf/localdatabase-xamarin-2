@@ -9,25 +9,18 @@ using Xamarin.Forms;
 
 namespace LocalDatabase.ViewModels
 {
-    public class AlbumViewModel : BaseViewModel
+    public class StudentViewMode : BaseViewModel
     {
         #region Services
-        private readonly ArtistaService dataServiceArtistas;
-        private readonly AlbumService dataServiceAlbumes;
+        private readonly StudentService dataServiceStudents;
         #endregion
 
         #region Attributes
-        private ObservableCollection<Artista> artistas;
-
-        public AlbumViewModel(ObservableCollection<Artista> artistas)
-        {
-            this.artistas = artistas;
-        }
-
-        private Artista selectedArtista;
-        private string titulo;
-        private double precio;
-        private int anio;
+        private string first_name;
+        private string last_name;
+        private string fecha_nacimiento;
+        private int nota;
+        private bool aprobado;
         #endregion
 
         #region Properties
@@ -120,9 +113,9 @@ namespace LocalDatabase.ViewModels
         #endregion Commands
 
         #region Constructor
-        public AlbumViewModel()
+        public StudentViewMode()
         {
-            this.dataServiceArtistas = new ArtistaService();
+            this.dataServiceStudents = new ArtistaService();
             this.dataServiceAlbumes = new AlbumService();
             this.LoadArtistas();
             this.Anio = DateTime.Now.Year;
@@ -137,10 +130,9 @@ namespace LocalDatabase.ViewModels
         #region Methods
         private void LoadArtistas()
         {
-            var artistasDB = this.dataServiceArtistas.Get();
+            var artistasDB = this.dataServiceStudents.Get();
             this.Artistas = new ObservableCollection<Artista>(artistasDB);
         }
         #endregion
     }
 }
-

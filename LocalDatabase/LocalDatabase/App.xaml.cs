@@ -14,7 +14,7 @@ namespace LocalDatabase
         {
             InitializeComponent();
             GetContext().Database.EnsureCreated();
-            MainPage = new NavigationPage(new AlbumesPage());
+            MainPage = new NavigationPage(new StudentsPage());
         }
         public static AppDbContext GetContext()
         {

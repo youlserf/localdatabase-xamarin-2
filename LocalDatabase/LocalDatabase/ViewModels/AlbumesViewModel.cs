@@ -100,4 +100,3 @@ namespace LocalDatabase.ViewModels
         #endregion Methods
     }
 }
-

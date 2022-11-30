@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LocalDatabase.Views.StudentsPage">
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout.Padding>
+                <OnPlatform 
+                    x:TypeArguments="Thickness"
+                    Android="20"
+                    iOS="50"/>
+            </StackLayout.Padding>
+            <StackLayout Orientation="Horizontal">
+                <Label
+                                      
+                                            Text="Hello"
+                                            FontAttributes="Bold"/>
+                <Button Text="Add"
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" 
+                    Command="{Binding NeWStudentCommand}"                             
+                         />
+                <Button Text="List"                  
+                    HorizontalOptions="Center"
+                    VerticalOptions="CenterAndExpand" 
+                    Command="{Binding LoadStudentsCommand}"                             
+                         />
+            </StackLayout>
+            <ListView
+                ItemsSource="{Binding Students}"
+                HasUnevenRows="True"            
+                SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame
+                                CornerRadius="20"
+                                HasShadow="True"
+                                Margin="3">
+
+                                <StackLayout
+                                    Orientation="Vertical">
+                                    <Grid
+                                    VerticalOptions="CenterAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Text="Nombre: "
+                                            FontAttributes="Bold"/>
+
+                                        <Label 
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Text="{Binding FirstName}"/>
+                                    </Grid>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

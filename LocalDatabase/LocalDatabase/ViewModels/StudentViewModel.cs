@@ -9,7 +9,7 @@ using Xamarin.Forms;
 
 namespace LocalDatabase.ViewModels
 {
-    public class StudentViewMode : BaseViewModel
+    public class StudentViewModel : BaseViewModel
     {
         #region Services
         private readonly StudentService dataServiceStudents;
@@ -20,38 +20,46 @@ namespace LocalDatabase.ViewModels
         private string last_name;
         private string fecha_nacimiento;
         private int nota;
-        private bool aprobado;
         #endregion
 
         #region Properties
-        public ObservableCollection<Artista> Artistas
+ 
+        public string FirstName
         {
-            get { return this.artistas; }
-            set { SetValue(ref this.artistas, value); }
+            get { return this.first_name; }
+            set { SetValue(ref this.first_name, value); }
         }
 
-        public Artista SelectedArtista
+        public string LastName
         {
-            get { return this.selectedArtista; }
-            set { SetValue(ref this.selectedArtista, value); }
+            get { return this.last_name; }
+            set { SetValue(ref this.last_name, value); }
         }
 
-        public string Titulo
+        public string FechaNacimiento
         {
-            get { return this.titulo; }
-            set { SetValue(ref this.titulo, value); }
+            get { return this.fecha_nacimiento; }
+            set { SetValue(ref this.fecha_nacimiento, value); }
         }
 
-        public double Precio
+        public int Nota
         {
-            get { return this.precio; }
-            set { SetValue(ref this.precio, value); }
+            get { return this.nota; }
+            set { SetValue(ref this.nota, value); }
         }
 
-        public int Anio
+        string estado = "Aprobado";
+        public string Aprobado
         {
-            get { return this.anio; }
-            set { SetValue(ref this.anio, value); }
+            get { return estado; }
+            set
+            {
+                if (nota < 13)
+                {
+                    estado = "Desaprobado";
+                }
+            }
+                
         }
 
 
@@ -64,48 +72,39 @@ namespace LocalDatabase.ViewModels
             {
                 return new Command(async () =>
                 {
-                    var newAlbum = new Album()
+                    var newStudent = new Student()
                     {
-                        ArtistaID = this.SelectedArtista.ArtistaID,
-                        Titulo = this.Titulo,
-                        Precio = this.Precio,
-                        Anio = this.Anio
+        
+                        FirstName = this.FirstName,
+                        LastName = this.LastName,
+                        FechaNacimiento = this.FechaNacimiento,
+                        Nota = this.Nota,
+                        Aprobado = this.Aprobado
                     };
 
-                    var album = this.dataServiceAlbumes.GetByTitulo(newAlbum.Titulo);
 
-                    if (album == null)
+                    if (newStudent != null)
                     {
-                        if (newAlbum != null)
+                        if (this.dataServiceStudents.Create(newStudent))
                         {
-                            if (this.dataServiceAlbumes.Create(newAlbum))
-                            {
-                                await Application.Current.MainPage.DisplayAlert("Operación Exitosa",
-                                                                                $"Albúm del artista: {this.SelectedArtista.Nombre} " +
-                                                                                $"creado correctamente en la base de datos",
-                                                                                "Ok");
+                            await Application.Current.MainPage.DisplayAlert("Operación Exitosa",
+                                                                            $"Esrudiante creado correctamente en la base de datos",
+                                                                            "Ok");
+                            this.FirstName = string.Empty;
+                            this.LastName = string.Empty;
+                            this.FechaNacimiento = string.Empty;
+                            this.Nota = 0;
+                            await Application.Current.MainPage.Navigation.PopAsync();
 
-                                this.SelectedArtista = null;
-                                this.Titulo = string.Empty;
-                                this.Precio = 0;
-                                this.Anio = DateTime.Now.Year;
-                                await Application.Current.MainPage.Navigation.PopAsync();
-
-                            }
-
-                            else
-                                await Application.Current.MainPage.DisplayAlert("Operación Fallida",
-                                                                                $"Error al crear el Albúm en la base de datos",
-                                                                                "Ok");
                         }
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Validación",
-                                                                              $"Título Repetido",
-                                                                              "Ok");
+
+                        else
+                            await Application.Current.MainPage.DisplayAlert("Operación Fallida",
+                                                                            $"Error al crear el Estudiante",
+                                                                            "Ok");
                     }
 
+                   
 
                 });
             }
@@ -113,26 +112,14 @@ namespace LocalDatabase.ViewModels
         #endregion Commands
 
         #region Constructor
-        public StudentViewMode()
+        public StudentViewModel()
         {
-            this.dataServiceStudents = new ArtistaService();
-            this.dataServiceAlbumes = new AlbumService();
-            this.LoadArtistas();
-            this.Anio = DateTime.Now.Year;
+            this.dataServiceStudents = new StudentService();
         }
         #endregion Constructor
 
-
-
-
-
-
         #region Methods
-        private void LoadArtistas()
-        {
-            var artistasDB = this.dataServiceStudents.Get();
-            this.Artistas = new ObservableCollection<Artista>(artistasDB);
-        }
+        
         #endregion
     }
 }

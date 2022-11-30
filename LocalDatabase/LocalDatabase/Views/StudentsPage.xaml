@@ -58,6 +58,16 @@
                                             Grid.Row="1"
                                             Grid.Column="1"
                                             Text="{Binding FirstName}"/>
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            Text="Nombre: "
+                                            FontAttributes="Bold"/>
+
+                                        <Label 
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Text="{Binding Aprobado}"/>
                                     </Grid>
                                 </StackLayout>
                             </Frame>

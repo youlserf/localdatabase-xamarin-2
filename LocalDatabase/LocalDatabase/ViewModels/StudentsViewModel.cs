@@ -95,7 +95,7 @@ namespace LocalDatabase.ViewModels
                 LastName = "Cardenas",
                 FechaNacimiento = "31/05/0022",
                 Nota = 20,
-                Aprobado = true
+                Aprobado = "Aprobado"
             },
                 new Student
             {
@@ -103,7 +103,7 @@ namespace LocalDatabase.ViewModels
                 LastName = "Rojas",
                 FechaNacimiento = "31/05/0022",
                 Nota = 15,
-                Aprobado = true
+                Aprobado = "Aprobado"
             },
             };
 

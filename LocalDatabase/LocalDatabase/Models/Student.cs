@@ -11,6 +11,6 @@ namespace LocalDatabase.Models
         public string LastName { get; set; }
         public string FechaNacimiento { get; set; }
         public int Nota { get; set; }
-        public bool Aprobado { get; set; }
+        public string Aprobado { get; set; }
     }
 }

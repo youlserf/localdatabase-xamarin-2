@@ -26,28 +26,36 @@
                     VerticalOptions="CenterAndExpand" 
                     Command="{Binding LoadStudentsCommand}"                             
                          />
+
+                <Button Text="Edit"                  
+                    Command="{Binding UpdateStudentCommand}"/>
+                
             </StackLayout>
             <ListView
                 ItemsSource="{Binding Students}"
+                x:Name="ListStudents"
                 HasUnevenRows="True"            
                 SeparatorVisibility="None">
+                
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            
                             <Frame
                                 CornerRadius="20"
                                 HasShadow="True"
                                 Margin="3">
-
                                 <StackLayout
                                     Orientation="Vertical">
+                                     
                                     <Grid
-                                    VerticalOptions="CenterAndExpand">
+                                        VerticalOptions="CenterAndExpand" 
+                                        x:Name="ItemStudent">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
-
+                                           
                                         <Label
                                             Grid.Row="1"
                                             Grid.Column="0"
@@ -68,6 +76,22 @@
                                             Grid.Row="2"
                                             Grid.Column="1"
                                             Text="{Binding Aprobado}"/>
+                                        <Button Text="Delete"    
+                                            Grid.Row="3"
+                                            Grid.Column="0"
+                                            BindingContext="{Binding Source={x:Reference ListStudents}, 
+                                            Path=BindingContext}"
+                                            Command="{Binding DeleteStudentCommand}"
+                                            CommandParameter="{Binding Source={x:Reference ItemStudent}, 
+                                            Path=BindingContext}"/>
+                                        <Button Text="Edit"    
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            BindingContext="{Binding Source={x:Reference ListStudents}, 
+                                            Path=BindingContext}"
+                                            Command="{Binding EditStudentCommand}"
+                                            CommandParameter="{Binding Source={x:Reference ItemStudent}, 
+                                            Path=BindingContext}"/>
                                     </Grid>
                                 </StackLayout>
                             </Frame>

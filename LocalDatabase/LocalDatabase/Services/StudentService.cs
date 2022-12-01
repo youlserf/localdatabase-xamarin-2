@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LocalDatabase.Services
 {
@@ -47,15 +48,12 @@ namespace LocalDatabase.Services
             _context.Students.AddRange(items);
             _context.SaveChanges();
         }
-        public void Update(Student item, int ID)
+        
+        public async Task Update(Student item)
         {
-            var model = GetByID(ID);
-            model.FirstName = item.FirstName;
-            model.LastName = item.LastName;
-            model.FechaNacimiento = item.FechaNacimiento;
-            model.Nota = item.Nota;
-            model.Aprobado = item.Aprobado;
-            _context.SaveChanges();
+            var prueba = item;
+            _context.Students.Update(item);
+            await _context.SaveChangesAsync();
         }
         public void Delete(int ID)
         {

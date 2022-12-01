@@ -1,5 +1,4 @@
-﻿using LocalDatabase.Models;
-using LocalDatabase.ViewModels;
+﻿using LocalDatabase.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace LocalDatabase.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class StudentPage : ContentPage
+    public partial class StudentDetail : ContentPage
     {
-        public StudentPage()
+        public StudentDetail()
         {
             InitializeComponent();
             this.BindingContext = new StudentViewModel();
-        }
-        public StudentPage(Student student)
-        {
-            InitializeComponent();
-            this.BindingContext = new StudentViewModel(student);
         }
     }
 }

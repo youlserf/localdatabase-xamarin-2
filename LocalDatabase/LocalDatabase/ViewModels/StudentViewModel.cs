@@ -1,5 +1,6 @@
 ﻿using LocalDatabase.Models;
 using LocalDatabase.Services;
+using LocalDatabase.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,14 +17,23 @@ namespace LocalDatabase.ViewModels
         #endregion
 
         #region Attributes
+        Student estudent;
         private string first_name;
         private string last_name;
         private string fecha_nacimiento;
         private int nota;
+
+        
         #endregion
 
         #region Properties
- 
+
+        private string title = "Agregar";
+        public string Title
+        {
+            get { return this.title; }
+            set { SetValue(ref this.title, value); }
+        }
         public string FirstName
         {
             get { return this.first_name; }
@@ -74,7 +84,7 @@ namespace LocalDatabase.ViewModels
                 {
                     var newStudent = new Student()
                     {
-        
+
                         FirstName = this.FirstName,
                         LastName = this.LastName,
                         FechaNacimiento = this.FechaNacimiento,
@@ -82,30 +92,48 @@ namespace LocalDatabase.ViewModels
                         Aprobado = this.Aprobado
                     };
 
-
-                    if (newStudent != null)
+                    if (estudent != null)
                     {
-                        if (this.dataServiceStudents.Create(newStudent))
-                        {
-                            await Application.Current.MainPage.DisplayAlert("Operación Exitosa",
-                                                                            $"Esrudiante creado correctamente en la base de datos",
-                                                                            "Ok");
-                            this.FirstName = string.Empty;
-                            this.LastName = string.Empty;
-                            this.FechaNacimiento = string.Empty;
-                            this.Nota = 0;
-                            await Application.Current.MainPage.Navigation.PopAsync();
+                    
 
-                        }
+                        newStudent.StudentId = estudent.StudentId;
 
-                        else
-                            await Application.Current.MainPage.DisplayAlert("Operación Fallida",
-                                                                            $"Error al crear el Estudiante",
-                                                                            "Ok");
+                        await this.dataServiceStudents.Update(newStudent);
+                        this.FirstName = string.Empty;
+                        this.LastName = string.Empty;
+                        this.FechaNacimiento = string.Empty;
+                        this.Nota = 0;
+
+                        await Application.Current.MainPage.Navigation.PushAsync(new StudentsPage());
+                        StudentsViewModel studentsViewModel = new StudentsViewModel();
+                        studentsViewModel.LoadStudents();
+
                     }
+                    else
+                    {
+                        if (newStudent != null)
+                        {
+                            if (this.dataServiceStudents.Create(newStudent))
+                            {
+                                await Application.Current.MainPage.DisplayAlert("Operación Exitosa",
+                                                                                $"Esrudiante creado correctamente en la base de datos",
+                                                                                "Ok");
+                                this.FirstName = string.Empty;
+                                this.LastName = string.Empty;
+                                this.FechaNacimiento = string.Empty;
+                                this.Nota = 0;
 
-                   
+                                await Application.Current.MainPage.Navigation.PushAsync(new StudentsPage());
+                                StudentsViewModel studentsViewModel = new StudentsViewModel();
+                                studentsViewModel.LoadStudents();
 
+                            }
+                            else
+                                await Application.Current.MainPage.DisplayAlert("Operación Fallida",
+                                                                                $"Error al crear el Estudiante",
+                                                                                "Ok");
+                        }
+                    }
                 });
             }
         }
@@ -116,10 +144,22 @@ namespace LocalDatabase.ViewModels
         {
             this.dataServiceStudents = new StudentService();
         }
+        public StudentViewModel(Student student)
+        {
+            this.dataServiceStudents = new StudentService();
+            estudent = student;
+            first_name = student.FirstName;
+            last_name = student.LastName;
+            fecha_nacimiento = student.FechaNacimiento;
+            nota = student.StudentId;
+            Title = "Editar";
+
+        }
         #endregion Constructor
 
         #region Methods
-        
+
+
         #endregion
     }
 }

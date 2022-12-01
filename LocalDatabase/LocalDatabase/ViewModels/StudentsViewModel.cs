@@ -17,7 +17,6 @@ namespace LocalDatabase.ViewModels
         #region Attributes
 
         private ObservableCollection<Student> students;
-
         #endregion Attributes
 
         #region Properties
@@ -29,7 +28,7 @@ namespace LocalDatabase.ViewModels
             set { SetValue(ref this.students, value); }
         }
 
-
+   
 
 
         #endregion Properties
@@ -41,6 +40,32 @@ namespace LocalDatabase.ViewModels
             get
             {
                 return new Command(NeWStudent);
+            }
+        }
+
+        public ICommand DeleteStudentCommand
+        {
+            get
+            {
+                return new Command(async (e) => { 
+                    var student = e as Student;
+                    var result = await Application.Current.MainPage.DisplayAlert("Delete", $"Delete {student.FirstName} ?", "Yes", "No");
+                    if (result) 
+                    {
+                        this.dataServiceStudents.Delete(student.StudentId);
+                        this.LoadStudents();
+                    }
+                });
+            }
+        }
+        public ICommand EditStudentCommand
+        {
+            get
+            {
+                return new Command(async (e) => {
+                    var student = e as Student;
+                    await Application.Current.MainPage.Navigation.PushAsync(new StudentPage(student));
+                });
             }
         }
 
@@ -58,7 +83,7 @@ namespace LocalDatabase.ViewModels
         {
             this.dataServiceStudents = new StudentService();
 
-            this.CreateStudents();
+            //this.CreateStudents();
 
 
             this.LoadStudents();
@@ -74,11 +99,8 @@ namespace LocalDatabase.ViewModels
         private void NeWStudent()
         {
             Application.Current.MainPage.Navigation.PushAsync(new StudentPage());
-
-
-
         }
-        private void LoadStudents()
+        public  void LoadStudents()
         {
             var studentsDB = this.dataServiceStudents.Get();
             this.Students = new ObservableCollection<Student>(studentsDB);
@@ -99,7 +121,7 @@ namespace LocalDatabase.ViewModels
             },
                 new Student
             {
-                FirstName = "Ximena",
+                FirstName = "Alejandra",
                 LastName = "Rojas",
                 FechaNacimiento = "31/05/0022",
                 Nota = 15,

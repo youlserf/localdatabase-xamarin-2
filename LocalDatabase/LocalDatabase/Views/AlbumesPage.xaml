@@ -88,6 +88,13 @@
                                             Grid.Row="3"
                                             Grid.Column="1"
                                             Text="{Binding Anio}"/>
+                                        <Button Text="Add"
+                                                Grid.Row="4"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="CenterAndExpand" 
+                                            Command="{Binding UpdateStudentCommand}"                             
+                                                 />         
+                                        
                                     </Grid>
                                 </StackLayout>
                             </Frame>

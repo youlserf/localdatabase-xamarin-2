@@ -13,9 +13,7 @@ namespace LocalDatabase.DataContext
         }
 
         public DbSet<Student> Students { get; set; }
-        public DbSet<Artista> Artistas { get; set; }
-        public DbSet<Album> Albumes { get; set; }
-
+        
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

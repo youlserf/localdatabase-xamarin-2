@@ -12,10 +12,7 @@
                     iOS="50"/>
             </StackLayout.Padding>
             <StackLayout Orientation="Horizontal">
-                <Label
-                                      
-                                            Text="Hello"
-                                            FontAttributes="Bold"/>
+                
                 <Button Text="Add"
                     HorizontalOptions="Center"
                     VerticalOptions="CenterAndExpand" 
@@ -27,8 +24,7 @@
                     Command="{Binding LoadStudentsCommand}"                             
                          />
 
-                <Button Text="Edit"                  
-                    Command="{Binding UpdateStudentCommand}"/>
+               
                 
             </StackLayout>
             <ListView
@@ -69,7 +65,7 @@
                                         <Label
                                             Grid.Row="2"
                                             Grid.Column="0"
-                                            Text="Nombre: "
+                                            Text="Estado: "
                                             FontAttributes="Bold"/>
 
                                         <Label 
@@ -79,6 +75,8 @@
                                         <Button Text="Delete"    
                                             Grid.Row="3"
                                             Grid.Column="0"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="CenterAndExpand" 
                                             BindingContext="{Binding Source={x:Reference ListStudents}, 
                                             Path=BindingContext}"
                                             Command="{Binding DeleteStudentCommand}"
@@ -87,6 +85,8 @@
                                         <Button Text="Edit"    
                                             Grid.Row="3"
                                             Grid.Column="1"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="CenterAndExpand" 
                                             BindingContext="{Binding Source={x:Reference ListStudents}, 
                                             Path=BindingContext}"
                                             Command="{Binding EditStudentCommand}"
